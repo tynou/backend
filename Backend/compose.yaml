@@ -1,0 +1,10 @@
+﻿services:
+  auth-db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: auth
+    ports:
+      - "5433:5432"
+
