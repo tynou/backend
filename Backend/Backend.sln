@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway", "Gateway\Gateway.csproj", "{5133B977-9D98-477A-8A3F-AA18E0AD3B7B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{34F6D2A5-BBA9-45A0-AE27-B2E178751C5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{A00BC5F8-DD6F-40DB-B517-8E284E1FACB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\AuthService.csproj", "{0600A7D1-4DEB-458E-8788-4BDC35A0BD7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5133B977-9D98-477A-8A3F-AA18E0AD3B7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5133B977-9D98-477A-8A3F-AA18E0AD3B7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5133B977-9D98-477A-8A3F-AA18E0AD3B7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5133B977-9D98-477A-8A3F-AA18E0AD3B7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0600A7D1-4DEB-458E-8788-4BDC35A0BD7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0600A7D1-4DEB-458E-8788-4BDC35A0BD7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0600A7D1-4DEB-458E-8788-4BDC35A0BD7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0600A7D1-4DEB-458E-8788-4BDC35A0BD7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0600A7D1-4DEB-458E-8788-4BDC35A0BD7F} = {34F6D2A5-BBA9-45A0-AE27-B2E178751C5F}
+	EndGlobalSection
+EndGlobal
