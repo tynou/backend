@@ -1,4 +1,5 @@
 using System.Text;
+using Auth.Application;
 using Auth.Infrastructure.Auth;
 using Auth.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,6 +14,8 @@ builder.Services.AddControllers();
 
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AuthDbContext>(options => options.UseNpgsql(connectionString));
+
+builder.Services.AddApplication(configuration["MediatR:Key"]);
 
 builder.Services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
 

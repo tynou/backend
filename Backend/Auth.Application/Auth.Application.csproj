@@ -8,7 +8,10 @@
 
     <ItemGroup>
       <Folder Include="Features\Auth\Login\" />
-      <Folder Include="Features\Auth\Register\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="14.1.0" />
     </ItemGroup>
 
 </Project>
