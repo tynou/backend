@@ -4,6 +4,7 @@ using Auth.Application.Interfaces;
 using Auth.Infrastructure.Auth;
 using Auth.Infrastructure.Persistence;
 using Auth.Infrastructure.Services;
+using AuthService.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -76,6 +77,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseCors("AllowFrontend");
 
