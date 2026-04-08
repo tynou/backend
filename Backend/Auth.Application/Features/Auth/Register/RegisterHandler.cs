@@ -1,3 +1,4 @@
+using Auth.Application.Exceptions;
 using Auth.Application.Interfaces;
 using Auth.Domain.Entities;
 using MediatR;
@@ -10,7 +11,7 @@ public class RegisterHandler(IUserRepository userRepository, IPasswordHasher pas
     {
         var existingUser = await userRepository.GetByUsernameAsync(request.Username);
         if (existingUser is not null)
-            throw new Exception("Username already in use");
+            throw new ConflictException("Username already in use");
 
         var passwordSalt = passwordHasher.CreateSalt();
         var passwordHash = passwordHasher.Hash(request.Password, passwordSalt);

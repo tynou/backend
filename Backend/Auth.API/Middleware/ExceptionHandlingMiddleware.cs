@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
+using Auth.Application.Exceptions;
 
 namespace AuthService.Middleware;
 
@@ -22,6 +23,8 @@ public class ExceptionHandlingMiddleware(RequestDelegate next)
     {
         var (statusCode, message) = exception switch
         {
+            UnauthorizedException => (HttpStatusCode.Unauthorized, "Unauthorized"),
+            ConflictException => (HttpStatusCode.Conflict, "Conflict"),
             _ => (HttpStatusCode.InternalServerError, "Internal Server Error")
         };
 
