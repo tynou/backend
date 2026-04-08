@@ -1,3 +1,4 @@
+using Auth.Application.Features.Auth.Login;
 using Auth.Application.Features.Auth.Register;
 using Auth.Application.Models;
 using MediatR;
@@ -18,14 +19,16 @@ public class AuthController(IMediator mediator) : ControllerBase
             registrationDto.PhoneNumber
         );
         
-        var result = await mediator.Send(command);
+        var response = await mediator.Send(command);
         
-        return Ok(new { Message = result });
+        return Ok(new { Message = response });
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] UserLoginDto loginDto)
     {
-        return Ok("123");
+        var command = new LoginCommand(loginDto.Username, loginDto.Password);
+        var response = await mediator.Send(command);
+        return Ok(response);
     }
 }

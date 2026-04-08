@@ -1,7 +1,9 @@
 using System.Text;
 using Auth.Application;
+using Auth.Application.Interfaces;
 using Auth.Infrastructure.Auth;
 using Auth.Infrastructure.Persistence;
+using Auth.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +16,9 @@ builder.Services.AddControllers();
 
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AuthDbContext>(options => options.UseNpgsql(connectionString));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 
 builder.Services.AddApplication(configuration["MediatR:Key"]);
 
@@ -59,11 +64,11 @@ builder.Services.AddAuthorization();
 var app = builder.Build();
 
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var dbContext = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
-//     dbContext.Database.EnsureCreated();
-// }
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+    dbContext.Database.EnsureCreated();
+}
 
 
 if (app.Environment.IsDevelopment())
