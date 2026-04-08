@@ -8,6 +8,10 @@ public class RegisterHandler(IUserRepository userRepository) : IRequestHandler<R
 {
     public async Task<string> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
+        var existingUser = await userRepository.GetByUsernameAsync(request.Username);
+        if (existingUser is not null)
+            throw new Exception("Username already in use");
+        
         var user = new User
         {
             Username = request.Username,
