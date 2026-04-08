@@ -18,6 +18,7 @@ builder.Services.AddControllers();
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AuthDbContext>(options => options.UseNpgsql(connectionString));
 
+builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 
@@ -68,6 +69,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+    dbContext.Database.EnsureDeleted();
     dbContext.Database.EnsureCreated();
 }
 

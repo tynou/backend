@@ -6,4 +6,5 @@ public class User
     public string Username { get; set; }
     public string PhoneNumber { get; set; }
     public string PasswordHash { get; set; }
+    public byte[] PasswordSalt { get; set; }
 }
