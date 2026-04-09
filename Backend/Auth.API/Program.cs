@@ -1,10 +1,10 @@
 using System.Text;
+using Auth.API.Middleware;
 using Auth.Application;
 using Auth.Application.Interfaces;
 using Auth.Infrastructure.Auth;
 using Auth.Infrastructure.Persistence;
 using Auth.Infrastructure.Services;
-using AuthService.Middleware;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;

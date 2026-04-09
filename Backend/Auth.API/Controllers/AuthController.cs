@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Contracts;
 
-namespace AuthService.Controllers;
+namespace Auth.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]

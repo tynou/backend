@@ -1,12 +1,10 @@
 using MassTransit;
-using Notification;
+using Notification.API.Consumers;
 
-var builder = Host.CreateApplicationBuilder(args);
-// builder.Services.AddHostedService<Worker>();
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMassTransit(x =>
 {
-    // Регистрируем наш обработчик (Consumer)
     x.AddConsumer<SendExampleConsumer>();
 
     x.UsingRabbitMq((context, cfg) =>
@@ -15,8 +13,7 @@ builder.Services.AddMassTransit(x =>
             h.Username("guest");
             h.Password("guest");
         });
-
-        // "Подписываемся" на очередь
+        
         cfg.ReceiveEndpoint("example-service", e =>
         {
             e.ConfigureConsumer<SendExampleConsumer>(context);
@@ -24,5 +21,6 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-var host = builder.Build();
-host.Run();
+var app = builder.Build();
+
+app.Run();

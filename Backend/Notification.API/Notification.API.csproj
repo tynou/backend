@@ -1,19 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk.Worker">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <UserSecretsId>dotnet-Notification-be8adcd8-047c-4eb1-b650-f1b4f5848f16</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="MassTransit" Version="8.5.9" />
         <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.9" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.2"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers\" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Shared.Contracts\Shared.Contracts.csproj" />
     </ItemGroup>
+
 </Project>

@@ -1,9 +1,8 @@
-using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
 using Auth.Application.Exceptions;
 
-namespace AuthService.Middleware;
+namespace Auth.API.Middleware;
 
 public class ExceptionHandlingMiddleware(RequestDelegate next)
 {
