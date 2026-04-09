@@ -1,22 +1,18 @@
 using Auth.Application.Features.Auth.Login;
 using Auth.Application.Features.Auth.Register;
 using Auth.Application.Models;
-using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Contracts;
 
 namespace Auth.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AuthController(IMediator mediator, IPublishEndpoint publishEndpoint) : ControllerBase
+public class AuthController(IMediator mediator) : ControllerBase
 {
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] UserRegistrationDto registrationDto)
     {
-        await publishEndpoint.Publish(new SendExampleEvent("1rczhvwds@gmail.com", "User is trying to register..."));
-        
         var command = new RegisterCommand(
             registrationDto.Username, 
             registrationDto.Password,

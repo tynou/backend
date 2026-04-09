@@ -11,7 +11,7 @@ builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("SmtpOp
 
 builder.Services.AddMassTransit(x =>
 {
-    x.AddConsumer<SendExampleConsumer>();
+    x.AddConsumer<SendOtpConsumer>();
 
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -20,10 +20,7 @@ builder.Services.AddMassTransit(x =>
             h.Password("guest");
         });
         
-        cfg.ReceiveEndpoint("example-service", e =>
-        {
-            e.ConfigureConsumer<SendExampleConsumer>(context);
-        });
+        cfg.ConfigureEndpoints(context);
     });
 });
 
