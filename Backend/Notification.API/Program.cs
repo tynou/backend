@@ -1,7 +1,13 @@
 using MassTransit;
 using Notification.API.Consumers;
+using Notification.Application.Interfaces;
+using Notification.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<INotificationProvider, EmailProvider>();
+
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("SmtpOptions"));
 
 builder.Services.AddMassTransit(x =>
 {

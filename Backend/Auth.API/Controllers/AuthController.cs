@@ -15,7 +15,7 @@ public class AuthController(IMediator mediator, IPublishEndpoint publishEndpoint
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] UserRegistrationDto registrationDto)
     {
-        await publishEndpoint.Publish(new SendExampleEvent("User is trying to register..."));
+        await publishEndpoint.Publish(new SendExampleEvent("1rczhvwds@gmail.com", "User is trying to register..."));
         
         var command = new RegisterCommand(
             registrationDto.Username, 
