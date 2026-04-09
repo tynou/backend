@@ -5,6 +5,7 @@ using Auth.Infrastructure.Auth;
 using Auth.Infrastructure.Persistence;
 using Auth.Infrastructure.Services;
 using AuthService.Middleware;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -29,6 +30,17 @@ builder.Services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h => {
+            h.Username("guest");
+            h.Password("guest");
+        });
+    });
+});
 
 var allowedOrigins = configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
 builder.Services.AddCors(options =>

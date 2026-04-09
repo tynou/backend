@@ -7,4 +7,10 @@
       POSTGRES_DB: auth
     ports:
       - "5433:5432"
+  
+  rabbit:
+    image: rabbitmq:4-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
