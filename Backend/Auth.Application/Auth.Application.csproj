@@ -12,15 +12,12 @@
       <PackageReference Include="MassTransit" Version="8.5.9" />
       <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.9" />
       <PackageReference Include="MediatR" Version="14.1.0" />
+      <PackageReference Include="StackExchange.Redis" Version="2.12.14" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Auth.Domain\Auth.Domain.csproj" />
       <ProjectReference Include="..\Shared.Contracts\Shared.Contracts.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Features\Otp\Verify\" />
     </ItemGroup>
 
 </Project>

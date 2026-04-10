@@ -1,4 +1,5 @@
 using Auth.Application.Features.Otp.SendCode;
+using Auth.Application.Features.Otp.Verify;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,13 +12,14 @@ public class OtpController(IMediator mediator) : ControllerBase
     [HttpPost("send-code")]
     public async Task<IActionResult> SendCode()
     {
-        await mediator.Send(new SendCodeCommand("1rczhvwds@gmail.com"));
+        await mediator.Send(new SendOtpCommand("1rczhvwds@gmail.com"));
         return Ok();
     }
-    
+
     [HttpPost("verify")]
     public async Task<IActionResult> Verify()
     {
-        return Ok();
+        var result = await mediator.Send(new VerifyOtpCommand("1rczhvwds@gmail.com", "736767"));
+        return Ok(new { Result = result });
     }
 }
