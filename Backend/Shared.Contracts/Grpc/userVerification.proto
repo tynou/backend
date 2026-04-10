@@ -1,7 +1,7 @@
 syntax = "proto3";
 option csharp_namespace = "Shared.Contracts.Grpc";
 
-service UserVerifiedGrpc {
+service UserVerificationGrpc {
   rpc GetUserVerification (UserVerificationRequest) returns (UserVerificationResponse);
 }
 

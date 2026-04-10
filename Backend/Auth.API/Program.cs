@@ -1,4 +1,5 @@
 using System.Text;
+using Auth.API.GrpcServices;
 using Auth.API.Middleware;
 using Auth.Application;
 using Auth.Application.Interfaces;
@@ -32,6 +33,8 @@ builder.Services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddGrpc();
 
 builder.Services.AddMassTransit(x =>
 {
@@ -93,6 +96,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapGrpcService<UserVerificationGrpcService>();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
