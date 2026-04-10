@@ -6,7 +6,7 @@ service UserVerificationGrpc {
 }
 
 message UserVerificationRequest {
-  string user_id = 1;
+  int32 user_id = 1;
 }
 
 message UserVerificationResponse {

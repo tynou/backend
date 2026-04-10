@@ -23,6 +23,11 @@ public class UserRepository(AuthDbContext context) : IUserRepository
         return await context.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
     }
 
+    public async Task<User?> GetByIdAsync(int id)
+    {
+        return await context.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
+    }
+
     public async Task SetVerifiedAsync(User user, bool isVerified)
     {
         user.IsVerified = isVerified;

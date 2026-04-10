@@ -10,5 +10,7 @@ public interface IUserRepository
     
     Task<User?> GetByEmailAsync(string email);
     
+    Task<User?> GetByIdAsync(int id);
+    
     Task SetVerifiedAsync(User user, bool isVerified);
 }
