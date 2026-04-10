@@ -1,3 +1,3 @@
 namespace Auth.Application.Models;
 
-public record UserRegistrationDto(string Username, string Password, string PhoneNumber);
+public record UserRegistrationDto(string Username, string Password, string Email);

@@ -5,9 +5,9 @@ using MediatR;
 
 namespace Auth.Application.Features.Auth.Register;
 
-public class RegisterHandler(IUserRepository userRepository, IPasswordHasher passwordHasher) : IRequestHandler<RegisterCommand, string>
+public class RegisterHandler(IUserRepository userRepository, IPasswordHasher passwordHasher) : IRequestHandler<RegisterCommand>
 {
-    public async Task<string> Handle(RegisterCommand request, CancellationToken cancellationToken)
+    public async Task Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
         var existingUser = await userRepository.GetByUsernameAsync(request.Username);
         if (existingUser is not null)
@@ -19,12 +19,10 @@ public class RegisterHandler(IUserRepository userRepository, IPasswordHasher pas
         var user = new User
         {
             Username = request.Username,
-            PhoneNumber = request.PhoneNumber,
+            Email = request.Email,
             PasswordHash = passwordHash,
             PasswordSalt = passwordSalt,
         };
         await userRepository.AddAsync(user);
-        
-        return $"User {request.Username} registered successfully";
     }
 }

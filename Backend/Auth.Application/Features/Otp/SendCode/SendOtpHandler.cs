@@ -13,12 +13,10 @@ public class SendOtpHandler(IPublishEndpoint publishEndpoint, IConnectionMultipl
 
     public async Task Handle(SendOtpCommand request, CancellationToken cancellationToken)
     {
-        var identifier = "1rczhvwds@gmail.com";
         var code = RandomNumberGenerator.GetInt32(100000, 999999).ToString();
-        var otpEvent = new SendOtpEvent(NotificationType.Email, identifier, code);
+        await _redis.StringSetAsync($"otp:{request.Identifier}", code, TimeSpan.FromMinutes(5));
         
-        await _redis.StringSetAsync($"otp:{identifier}", code, TimeSpan.FromMinutes(5));
-        
+        var otpEvent = new SendOtpEvent(NotificationType.Email, request.Identifier, code);
         await publishEndpoint.Publish(otpEvent, cancellationToken);
     }
 }

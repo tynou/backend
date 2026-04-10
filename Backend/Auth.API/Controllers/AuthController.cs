@@ -16,12 +16,12 @@ public class AuthController(IMediator mediator) : ControllerBase
         var command = new RegisterCommand(
             registrationDto.Username, 
             registrationDto.Password,
-            registrationDto.PhoneNumber
+            registrationDto.Email
         );
         
-        var response = await mediator.Send(command);
+        await mediator.Send(command);
         
-        return Ok(new { Message = response });
+        return Created();
     }
 
     [HttpPost("login")]

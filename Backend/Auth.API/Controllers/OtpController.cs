@@ -1,5 +1,6 @@
 using Auth.Application.Features.Otp.SendCode;
 using Auth.Application.Features.Otp.Verify;
+using Auth.Application.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,16 +11,18 @@ namespace Auth.API.Controllers;
 public class OtpController(IMediator mediator) : ControllerBase
 {
     [HttpPost("send-code")]
-    public async Task<IActionResult> SendCode()
+    public async Task<IActionResult> SendCode([FromBody] SendOtpDto sendOtpDto)
     {
-        await mediator.Send(new SendOtpCommand("1rczhvwds@gmail.com"));
+        var command = new SendOtpCommand(sendOtpDto.Type, sendOtpDto.Identifier);
+        await mediator.Send(command);
         return Ok();
     }
 
     [HttpPost("verify")]
-    public async Task<IActionResult> Verify()
+    public async Task<IActionResult> Verify([FromBody] VerifyOtpDto verifyOtpDto)
     {
-        var result = await mediator.Send(new VerifyOtpCommand("1rczhvwds@gmail.com", "736767"));
+        var command = new VerifyOtpCommand(verifyOtpDto.Identifier, verifyOtpDto.Code);
+        var result = await mediator.Send(command);
         return Ok(new { Result = result });
     }
 }
