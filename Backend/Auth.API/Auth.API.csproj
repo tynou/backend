@@ -8,23 +8,24 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Grpc.AspNetCore" Version="2.76.0" />
-        <PackageReference Include="Grpc.Core" Version="2.46.6" />
-        <PackageReference Include="MassTransit" Version="8.5.9" />
-        <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.9" />
-        <PackageReference Include="MediatR" Version="14.1.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.5" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.76.0"/>
+        <PackageReference Include="Grpc.Core" Version="2.46.6"/>
+        <PackageReference Include="MassTransit" Version="8.5.9"/>
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.9"/>
+        <PackageReference Include="MediatR" Version="14.1.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.5"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
-        <PackageReference Include="StackExchange.Redis" Version="2.12.14" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1"/>
+        <PackageReference Include="StackExchange.Redis" Version="2.12.14"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Auth.Application\Auth.Application.csproj" />
-      <ProjectReference Include="..\Auth.Infrastructure\Auth.Infrastructure.csproj" />
-      <ProjectReference Include="..\Shared.Contracts\Shared.Contracts.csproj" />
+        <ProjectReference Include="..\Auth.Application\Auth.Application.csproj"/>
+        <ProjectReference Include="..\Auth.Infrastructure\Auth.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Shared.Contracts\Shared.Contracts.csproj"/>
+        <ProjectReference Include="..\Common.Infrastructure\Common.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

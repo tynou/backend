@@ -2,6 +2,7 @@ using Auth.Application.Features.Auth.Login;
 using Auth.Application.Features.Auth.Register;
 using Auth.Application.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.API.Controllers;
@@ -30,5 +31,12 @@ public class AuthController(IMediator mediator) : ControllerBase
         var command = new LoginCommand(loginDto.Username, loginDto.Password);
         var response = await mediator.Send(command);
         return Ok(response);
+    }
+    
+    [HttpGet("test")]
+    [Authorize]
+    public async Task<IActionResult> Test()
+    {
+        return Ok("Success");
     }
 }

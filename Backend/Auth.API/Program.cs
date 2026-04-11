@@ -1,4 +1,3 @@
-using System.Text;
 using Auth.API.GrpcServices;
 using Auth.API.Middleware;
 using Auth.Application;
@@ -6,16 +5,16 @@ using Auth.Application.Interfaces;
 using Auth.Infrastructure.Auth;
 using Auth.Infrastructure.Persistence;
 using Auth.Infrastructure.Services;
+using Common.Infrastructure.Extensions;
 using MassTransit;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddEndpointsApiExplorer();
+var configuration = builder.Configuration;
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
@@ -30,8 +29,6 @@ builder.Services.AddSwaggerGen(options =>
         [new OpenApiSecuritySchemeReference("bearer", document)] = []
     });
 });
-
-var configuration = builder.Configuration;
 
 builder.Services.AddControllers();
 
@@ -76,24 +73,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        var jwtKey = configuration["Jwt:Key"] ?? "default-jwt-key-that-is-very-long";
-        var jwtIssuer = configuration["Jwt:Issuer"] ?? "issuer";
-        var jwtAudience = configuration["Jwt:Audience"] ?? "audience";
-
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidIssuer = jwtIssuer,
-            ValidateAudience = true,
-            ValidAudience = jwtAudience,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-        };
-    });
+builder.Services.AddJwtAuthentication(configuration);
 
 builder.Services.AddAuthorization();
 

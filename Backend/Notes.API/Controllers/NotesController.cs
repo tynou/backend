@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Notes.Application.Models;
 using Shared.Contracts.Grpc;
@@ -19,5 +20,12 @@ public class NotesController(UserVerificationGrpc.UserVerificationGrpcClient grp
     {
         var response = await grpcClient.GetUserVerificationAsync(new UserVerificationRequest() { UserId = 1 });
         return Ok(response);
+    }
+    
+    [HttpGet("test")]
+    [Authorize]
+    public async Task<IActionResult> Test()
+    {
+        return Ok("Success");
     }
 }

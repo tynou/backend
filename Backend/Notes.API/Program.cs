@@ -1,3 +1,4 @@
+using Common.Infrastructure.Extensions;
 using Microsoft.OpenApi;
 using Shared.Contracts.Grpc;
 
@@ -5,7 +6,8 @@ AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddEndpointsApiExplorer();
+var configuration = builder.Configuration;
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
@@ -20,6 +22,10 @@ builder.Services.AddSwaggerGen(options =>
         [new OpenApiSecuritySchemeReference("bearer", document)] = []
     });
 });
+
+builder.Services.AddJwtAuthentication(configuration);
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 
@@ -41,6 +47,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
