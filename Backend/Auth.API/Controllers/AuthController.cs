@@ -32,11 +32,4 @@ public class AuthController(IMediator mediator) : ControllerBase
         var response = await mediator.Send(command);
         return Ok(response);
     }
-    
-    [HttpGet("test")]
-    [Authorize]
-    public async Task<IActionResult> Test()
-    {
-        return Ok("Success");
-    }
 }

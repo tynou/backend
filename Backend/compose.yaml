@@ -8,6 +8,15 @@
     ports:
       - "5433:5432"
   
+  notes-db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: notes
+    ports:
+      - "5434:5432"
+  
   rabbit:
     image: rabbitmq:4-management
     ports:

@@ -27,6 +27,8 @@ public static class JwtExtensions
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
                 };
+                
+                options.MapInboundClaims = false;
             });
         return services;
     }

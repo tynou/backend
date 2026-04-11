@@ -1,3 +1,4 @@
+using Common.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Notes.Application.Models;
@@ -15,17 +16,23 @@ public class NotesController(UserVerificationGrpc.UserVerificationGrpcClient grp
         return Ok($"Note titled \"{title}\"");
     }
     
+    [Authorize]
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateNoteDto createNoteDto)
     {
-        var response = await grpcClient.GetUserVerificationAsync(new UserVerificationRequest() { UserId = 1 });
-        return Ok(response);
-    }
-    
-    [HttpGet("test")]
-    [Authorize]
-    public async Task<IActionResult> Test()
-    {
-        return Ok("Success");
+        var userId = User.GetUserId();
+        if (userId is null)
+            return Unauthorized("Incorrect JWT token");
+        
+        var username = User.GetUsername();
+        var response = await grpcClient.GetUserVerificationAsync(new UserVerificationRequest() { UserId = int.Parse(userId) });
+        var test = new
+        {
+            id = userId,
+            name = username,
+            ver = response.IsVerified,
+            exis = response.UserExists
+        };
+        return Ok(test);
     }
 }
