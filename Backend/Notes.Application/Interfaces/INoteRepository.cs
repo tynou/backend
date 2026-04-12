@@ -6,5 +6,5 @@ public interface INoteRepository
 {
     Task CreateAsync(Note note);
     
-    Task<Note?> GetByTitleAsync(string title);
+    Task<Note?> GetByTitleAsync(int userId, string title);
 }

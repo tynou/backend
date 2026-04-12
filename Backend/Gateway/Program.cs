@@ -1,4 +1,3 @@
-using Microsoft.OpenApi;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 

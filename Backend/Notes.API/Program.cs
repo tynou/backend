@@ -1,5 +1,9 @@
 using Common.Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+using Notes.Application.Interfaces;
+using Notes.Infrastructure.Persistence;
+using Notes.Infrastructure.Services;
 using Shared.Contracts.Grpc;
 
 AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
@@ -29,6 +33,11 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 
+var connectionString = configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<NoteDbContext>(options => options.UseNpgsql(connectionString));
+
+builder.Services.AddScoped<INoteRepository, NoteRepository>();
+
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddSwaggerGen();
@@ -38,6 +47,13 @@ builder.Services.AddGrpcClient<UserVerificationGrpc.UserVerificationGrpcClient>(
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<NoteDbContext>();
+    dbContext.Database.EnsureDeleted();
+    dbContext.Database.EnsureCreated();
+}
 
 if (app.Environment.IsDevelopment())
 {

@@ -9,11 +9,14 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.5"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7"/>
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Notes.Application\Notes.Application.csproj"/>
+        <ProjectReference Include="..\Notes.Infrastructure\Notes.Infrastructure.csproj" />
         <ProjectReference Include="..\Shared.Contracts\Shared.Contracts.csproj"/>
         <ProjectReference Include="..\Common.Infrastructure\Common.Infrastructure.csproj"/>
     </ItemGroup>
