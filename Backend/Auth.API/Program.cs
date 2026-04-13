@@ -61,18 +61,6 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-var allowedOrigins = configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowFrontend", policy =>
-    {
-        if (allowedOrigins.Length == 0)
-            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-        else
-            policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod();
-    });
-});
-
 builder.Services.AddJwtAuthentication(configuration);
 
 builder.Services.AddAuthorization();
@@ -97,8 +85,6 @@ if (app.Environment.IsDevelopment())
 app.MapGrpcService<UserVerificationGrpcService>();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-
-app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
