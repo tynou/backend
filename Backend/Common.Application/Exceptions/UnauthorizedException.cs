@@ -1,3 +1,3 @@
-namespace Auth.Application.Exceptions;
+namespace Common.Application.Exceptions;
 
 public class UnauthorizedException(string message) : Exception(message);

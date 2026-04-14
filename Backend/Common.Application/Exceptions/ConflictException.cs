@@ -1,3 +1,3 @@
-namespace Auth.Application.Exceptions;
+namespace Common.Application.Exceptions;
 
 public class ConflictException(string message) : Exception(message);

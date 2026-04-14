@@ -1,8 +1,9 @@
 using System.Net;
 using System.Text.Json;
-using Auth.Application.Exceptions;
+using Common.Application.Exceptions;
+using Microsoft.AspNetCore.Http;
 
-namespace Auth.API.Middleware;
+namespace Common.Infrastructure.Middleware;
 
 public class ExceptionHandlingMiddleware(RequestDelegate next)
 {

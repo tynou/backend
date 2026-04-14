@@ -2,7 +2,6 @@ using Auth.Application.Features.Auth.Login;
 using Auth.Application.Features.Auth.Register;
 using Auth.Application.Models;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.API.Controllers;

@@ -1,5 +1,5 @@
-using Auth.Application.Exceptions;
 using Auth.Application.Interfaces;
+using Common.Application.Exceptions;
 using MediatR;
 
 namespace Auth.Application.Features.Auth.Login;

@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
 
-namespace Auth.Application.Behaviors;
+namespace Common.Application.Behaviors;
 
 public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse>
 {

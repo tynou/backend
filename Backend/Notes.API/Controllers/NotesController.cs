@@ -1,61 +1,65 @@
-using System.Net;
 using Common.Infrastructure.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Notes.Application.Interfaces;
+using Notes.Application.Features.Notes.CreateNote;
+using Notes.Application.Features.Notes.DeleteNote;
+using Notes.Application.Features.Notes.GetNote;
+using Notes.Application.Features.Notes.UpdateNote;
 using Notes.Application.Models;
-using Notes.Domain.Entities;
-using Shared.Contracts.Grpc;
 
 namespace Notes.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class NotesController(UserVerificationGrpc.UserVerificationGrpcClient grpcClient, INoteRepository noteRepository) : ControllerBase
+public class NotesController(IMediator mediator) : ControllerBase
 {
     [Authorize]
-    [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] string title)
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetNote(int id)
     {
-        var userId = User.GetUserId();
-        if (userId is null)
-            return Unauthorized("Incorrect JWT token.");
-        
-        var note = await noteRepository.GetByTitleAsync(int.Parse(userId), title);
-        if (note is null)
-            return NotFound($"Note titled \"{title}\" not found.");
-        
-        var noteDto = new NoteDto(
-            note.Id,
-            note.Title,
-            note.Content,
-            note.CreatedAt
-        );
-        return Ok(noteDto);
-    }
-    
-    [Authorize]
-    [HttpPost("create")]
-    public async Task<IActionResult> Create([FromBody] CreateNoteDto createNoteDto)
-    {
-        var userId = User.GetUserId();
-        if (userId is null)
-            return Unauthorized("Incorrect JWT token.");
-        
-        var response = await grpcClient.GetUserVerificationAsync(new UserVerificationRequest() { UserId = int.Parse(userId) });
-        if (!response.UserExists || !response.IsVerified)
-            return Unauthorized("User does not exist or is not verified.");
+        var command = new GetNoteCommand(id, User.GetUserId());
 
-        var note = new Note()
-        {
-            UserId = int.Parse(userId),
-            Title = createNoteDto.Title,
-            Content = createNoteDto.Content,
-            CreatedAt = createNoteDto.CreatedAt ?? DateTime.UtcNow
-        };
+        var note = await mediator.Send(command);
         
-        await noteRepository.CreateAsync(note);
-        
+        return Ok(note);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> CreateNote([FromBody] CreateNoteDto createNoteDto)
+    {
+        var command = new CreateNoteCommand(
+            User.GetUserId(),
+            createNoteDto.Title,
+            createNoteDto.Content,
+            createNoteDto.CreatedAt
+        );
+
+        await mediator.Send(command);
+
         return Created();
+    }
+
+    [Authorize]
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> UpdateNote(int id, [FromBody] UpdateNoteDto updateNoteDto)
+    {
+        var command = new UpdateNoteCommand(id, User.GetUserId(), updateNoteDto.Title, updateNoteDto.Content);
+
+        await mediator.Send(command);
+        
+        return Ok("Note successfully updated.");
+    }
+
+    [Authorize]
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteNote(int id)
+    {
+        var command = new DeleteNodeCommand(id, User.GetUserId());
+        
+        await mediator.Send(command);
+
+        return Ok("Note successfully deleted.");
     }
 }

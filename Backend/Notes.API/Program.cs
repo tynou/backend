@@ -1,6 +1,8 @@
 using Common.Infrastructure.Extensions;
+using Common.Infrastructure.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+using Notes.Application;
 using Notes.Application.Interfaces;
 using Notes.Infrastructure.Persistence;
 using Notes.Infrastructure.Services;
@@ -38,6 +40,8 @@ builder.Services.AddDbContext<NoteDbContext>(options => options.UseNpgsql(connec
 
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
 
+builder.Services.AddApplication(configuration["MediatR:Key"], typeof(AssemblyMarker).Assembly);
+
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddSwaggerGen();
@@ -60,6 +64,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

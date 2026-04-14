@@ -1,17 +1,14 @@
 using System.Reflection;
-using Auth.Application.Behaviors;
+using Common.Application.Behaviors;
 using FluentValidation;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Auth.Application;
+namespace Common.Infrastructure.Extensions;
 
-public static class DependencyInjection
+public static class MediatorExtensions
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services, string? mediatorKey)
+    public static IServiceCollection AddApplication(this IServiceCollection services, string? mediatorKey, Assembly assembly)
     {
-        var assembly = Assembly.GetExecutingAssembly();
-        
         services.AddMediatR(cfg =>
         {
             cfg.RegisterServicesFromAssembly(assembly);
