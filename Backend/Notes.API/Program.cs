@@ -46,7 +46,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddGrpcClient<UserVerificationGrpc.UserVerificationGrpcClient>(o => {
-    o.Address = new Uri("http://localhost:5278");
+    o.Address = new Uri("http://auth-service:7002");
 });
 
 var app = builder.Build();
@@ -58,18 +58,15 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.EnsureCreated();
 }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
+
+// app.UseHttpsRedirection();
 
 app.MapControllers();
 

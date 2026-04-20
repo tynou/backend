@@ -32,3 +32,58 @@
     image: redis/redisinsight:latest
     ports:
       - "5540:5540"
+  
+  gateway-service:
+    build:
+      context: ./Gateway
+    environment:
+      - ASPNETCORE_HTTP_PORTS=5000
+    ports:
+      - "5000:5000"
+    depends_on:
+      - auth-service
+      - notes-service
+
+  auth-service:
+    build:
+      context: ./Auth.API
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=auth-db;Database=auth;Username=postgres;Password=1234
+      - RabbitMQ__Host=rabbit
+      - Redis__Host=redis
+      - ASPNETCORE_HTTP_PORTS=7001;7002
+      - ASPNETCORE_KESTREL__ENDPOINTS__HTTP__URL=http://*:7001
+      - ASPNETCORE_KESTREL__ENDPOINTS__HTTP__PROTOCOLS=Http1
+      - ASPNETCORE_KESTREL__ENDPOINTS__GRPC__URL=http://*:7002
+      - ASPNETCORE_KESTREL__ENDPOINTS__GRPC__PROTOCOLS=Http2
+    ports:
+      - "7001:7001" # REST
+      - "7002:7002" # gRPC
+    depends_on:
+      - auth-db
+      - rabbit
+      - redis
+
+  notes-service:
+    build:
+      context: ./Notes.API
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=notes-db;Database=notes;Username=postgres;Password=1234
+      - AuthService__GrpcUrl=http://auth-service:7002
+      - ASPNETCORE_HTTP_PORTS=7003
+    ports:
+      - "7003:7003"
+    depends_on:
+      - notes-db
+      - auth-service
+  
+  notification-service:
+    build:
+      context: ./Notification.API
+    environment:
+      - RabbitMQ__Host=rabbit
+      - ASPNETCORE_HTTP_PORTS=7004
+    ports:
+      - "7004:7004"
+    depends_on:
+      - rabbit

@@ -5,6 +5,8 @@ using Notification.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
+
 builder.Services.AddScoped<INotificationProvider, EmailProvider>();
 
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("SmtpOptions"));
@@ -15,7 +17,8 @@ builder.Services.AddMassTransit(x =>
 
     x.UsingRabbitMq((context, cfg) =>
     {
-        cfg.Host("localhost", "/", h => {
+        var rabbitHost = configuration["RabbitMQ:Host"] ?? "localhost";
+        cfg.Host(rabbitHost, "/", h => {
             h.Username("guest");
             h.Password("guest");
         });
