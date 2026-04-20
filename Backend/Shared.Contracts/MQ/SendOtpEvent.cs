@@ -1,3 +1,3 @@
 namespace Shared.Contracts.MQ;
 
-public record SendOtpEvent(NotificationType Type, string Identifier, string Code);
+public record SendOtpEvent(string Type, string Identifier, string Code);

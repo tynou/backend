@@ -10,6 +10,8 @@ public class CreateNoteHandler(UserVerificationGrpc.UserVerificationGrpcClient g
 {
     public async Task Handle(CreateNoteCommand request, CancellationToken cancellationToken)
     {
+        // понимаю, что использовать gRPC тут - это слишком
+        // просто хотел опробовать технологию
         var response = await grpcClient.GetUserVerificationAsync(new UserVerificationRequest() { UserId = request.UserId });
         if (!response.UserExists || !response.IsVerified)
             throw new UnauthorizedException("User does not exist or is not verified.");

@@ -3,13 +3,12 @@ using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
 using Notification.Application.Interfaces;
-using Shared.Contracts;
 
 namespace Notification.Infrastructure.Services;
 
 public class EmailProvider : INotificationProvider
 {
-    public NotificationType Type => NotificationType.Email;
+    public string Type => "email";
 
     private readonly SmtpOptions _options;
 

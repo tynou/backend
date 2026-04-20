@@ -10,6 +10,6 @@ public class DeleteNoteHandler(INoteRepository noteRepository) : IRequestHandler
         var success = await noteRepository.DeleteAsync(request.NoteId, request.UserId);
 
         if (!success)
-            throw new Exception("Could not delete the note.");
+            throw new Exception("Note could not be deleted.");
     }
 }

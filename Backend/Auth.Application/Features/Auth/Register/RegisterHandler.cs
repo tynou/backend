@@ -1,6 +1,6 @@
-using Auth.Application.Exceptions;
 using Auth.Application.Interfaces;
 using Auth.Domain.Entities;
+using Common.Application.Exceptions;
 using MediatR;
 
 namespace Auth.Application.Features.Auth.Register;
@@ -21,7 +21,7 @@ public class RegisterHandler(IUserRepository userRepository, IPasswordHasher pas
             Username = request.Username,
             Email = request.Email,
             PasswordHash = passwordHash,
-            PasswordSalt = passwordSalt,
+            PasswordSalt = passwordSalt
         };
         await userRepository.AddAsync(user);
     }

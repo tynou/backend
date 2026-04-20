@@ -2,7 +2,6 @@ using Common.Infrastructure.Extensions;
 using Common.Infrastructure.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
-using Notes.Application;
 using Notes.Application.Interfaces;
 using Notes.Infrastructure.Persistence;
 using Notes.Infrastructure.Services;
@@ -40,7 +39,7 @@ builder.Services.AddDbContext<NoteDbContext>(options => options.UseNpgsql(connec
 
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
 
-builder.Services.AddApplication(configuration["MediatR:Key"], typeof(AssemblyMarker).Assembly);
+builder.Services.AddApplication(configuration["MediatR:Key"], typeof(Notes.Application.AssemblyMarker).Assembly);
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 

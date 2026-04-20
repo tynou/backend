@@ -1,5 +1,4 @@
 using Auth.API.GrpcServices;
-using Auth.Application;
 using Auth.Application.Interfaces;
 using Auth.Infrastructure.Auth;
 using Auth.Infrastructure.Persistence;
@@ -40,7 +39,7 @@ builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 
-builder.Services.AddApplication(configuration["MediatR:Key"], typeof(AssemblyMarker).Assembly);
+builder.Services.AddApplication(configuration["MediatR:Key"], typeof(Auth.Application.AssemblyMarker).Assembly);
 
 builder.Services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
 

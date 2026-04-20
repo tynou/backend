@@ -1,7 +1,6 @@
 using System.Security.Cryptography;
 using MassTransit;
 using MediatR;
-using Shared.Contracts;
 using Shared.Contracts.MQ;
 using StackExchange.Redis;
 
@@ -16,7 +15,7 @@ public class SendOtpHandler(IPublishEndpoint publishEndpoint, IConnectionMultipl
         var code = RandomNumberGenerator.GetInt32(100000, 999999).ToString();
         await _redis.StringSetAsync($"otp:{request.Identifier}", code, TimeSpan.FromMinutes(5));
         
-        var otpEvent = new SendOtpEvent(NotificationType.Email, request.Identifier, code);
+        var otpEvent = new SendOtpEvent("email", request.Identifier, code);
         await publishEndpoint.Publish(otpEvent, cancellationToken);
     }
 }
