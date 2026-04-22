@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
+using Common.Contracts.MQ;
 using MassTransit;
 using MediatR;
-using Shared.Contracts.MQ;
 using StackExchange.Redis;
 
 namespace Auth.Application.Features.Otp.SendCode;

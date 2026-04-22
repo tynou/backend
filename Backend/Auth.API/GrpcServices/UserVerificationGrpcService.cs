@@ -1,6 +1,6 @@
 using Auth.Application.Interfaces;
 using Grpc.Core;
-using Shared.Contracts.Grpc;
+using Common.Contracts.Grpc;
 
 namespace Auth.API.GrpcServices;
 

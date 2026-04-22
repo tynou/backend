@@ -5,7 +5,7 @@ using Microsoft.OpenApi;
 using Notes.Application.Interfaces;
 using Notes.Infrastructure.Persistence;
 using Notes.Infrastructure.Services;
-using Shared.Contracts.Grpc;
+using Common.Contracts.Grpc;
 
 AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 

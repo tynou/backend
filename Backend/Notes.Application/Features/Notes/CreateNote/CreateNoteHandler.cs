@@ -2,7 +2,7 @@ using Common.Application.Exceptions;
 using MediatR;
 using Notes.Application.Interfaces;
 using Notes.Domain.Entities;
-using Shared.Contracts.Grpc;
+using Common.Contracts.Grpc;
 
 namespace Notes.Application.Features.Notes.CreateNote;
 

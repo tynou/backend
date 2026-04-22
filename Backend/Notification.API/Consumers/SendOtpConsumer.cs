@@ -1,6 +1,6 @@
+using Common.Contracts.MQ;
 using MassTransit;
 using Notification.Application.Interfaces;
-using Shared.Contracts.MQ;
 
 namespace Notification.API.Consumers;
 
