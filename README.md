@@ -19,8 +19,8 @@
 - **Архитектурные паттерны:** Microservices, Clean Architecture, CQRS
 - **API Gateway:** Ocelot (с настройкой агрегации Swagger-документации)
 - **Внутрисервисная маршрутизация:** MediatR
-- **Асинхронное взаимодействие:** RabbitMQ (через MassTransit)
+- **Асинхронное взаимодействие:** RabbitMQ
 - **Синхронное взаимодействие:** gRPC
-- **Базы данных и кэш:** PostgreSQL (через Entity Framework Core), Redis
+- **Базы данных и кэш:** PostgreSQL, Redis
 - **Инфраструктура:** Docker, Docker Compose
 - **Валидация:** FluentValidation
