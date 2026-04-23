@@ -17,12 +17,12 @@
       "SwaggerKey": "auth"
     },
     {
-      "DownstreamPathTemplate": "/notes/{everything}",
+      "DownstreamPathTemplate": "/posts/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [ { "Host": "notes-service", "Port": 7003 } ],
-      "UpstreamPathTemplate": "/notes/{everything}",
+      "DownstreamHostAndPorts": [ { "Host": "posts-service", "Port": 7003 } ],
+      "UpstreamPathTemplate": "/posts/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "SwaggerKey": "notes"
+      "SwaggerKey": "posts"
     }
   ],
   "SwaggerEndPoints": [
@@ -31,8 +31,8 @@
       "Config": [ { "Name": "Auth API", "Version": "v1", "Url": "http://auth-service:7001/swagger/v1/swagger.json" } ]
     },
     {
-      "Key": "notes",
-      "Config": [ { "Name": "Notes API", "Version": "v1", "Url": "http://notes-service:7003/swagger/v1/swagger.json" } ]
+      "Key": "posts",
+      "Config": [ { "Name": "Posts API", "Version": "v1", "Url": "http://posts-service:7003/swagger/v1/swagger.json" } ]
     }
   ]
 }

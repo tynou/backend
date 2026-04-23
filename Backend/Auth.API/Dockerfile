@@ -11,7 +11,7 @@ COPY ["Auth.API/Auth.API.csproj", "Auth.API/"]
 COPY ["Auth.Infrastructure/Auth.Infrastructure.csproj", "Auth.Infrastructure/"]
 COPY ["Auth.Domain/Auth.Domain.csproj", "Auth.Domain/"]
 COPY ["Auth.Application/Auth.Application.csproj", "Auth.Application/"]
-COPY ["Shared.Contracts/Shared.Contracts.csproj", "Shared.Contracts/"]
+COPY ["Common.Contracts/Common.Contracts.csproj", "Common.Contracts/"]
 COPY ["Common.Application/Common.Application.csproj", "Common.Application/"]
 COPY ["Common.Infrastructure/Common.Infrastructure.csproj", "Common.Infrastructure/"]
 RUN dotnet restore "Auth.API/Auth.API.csproj"

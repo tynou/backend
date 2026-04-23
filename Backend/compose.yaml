@@ -8,12 +8,12 @@
     ports:
       - "5433:5432"
   
-  notes-db:
+  posts-db:
     image: postgres:18-alpine
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: notes
+      POSTGRES_DB: posts
     ports:
       - "5434:5432"
   
@@ -42,7 +42,7 @@
       - "5000:5000"
     depends_on:
       - auth-service
-      - notes-service
+      - posts-service
 
   auth-service:
     build:
@@ -64,17 +64,17 @@
       - rabbit
       - redis
 
-  notes-service:
+  posts-service:
     build:
-      context: ./Notes.API
+      context: ./Posts.API
     environment:
-      - ConnectionStrings__DefaultConnection=Host=notes-db;Database=notes;Username=postgres;Password=1234
+      - ConnectionStrings__DefaultConnection=Host=posts-db;Database=posts;Username=postgres;Password=1234
       - AuthService__GrpcUrl=http://auth-service:7002
       - ASPNETCORE_HTTP_PORTS=7003
     ports:
       - "7003:7003"
     depends_on:
-      - notes-db
+      - posts-db
       - auth-service
   
   notification-service:

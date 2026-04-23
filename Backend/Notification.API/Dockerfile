@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Notification.API/Notification.API.csproj", "Notification.API/"]
-COPY ["Shared.Contracts/Shared.Contracts.csproj", "Shared.Contracts/"]
+COPY ["Common.Contracts/Common.Contracts.csproj", "Common.Contracts/"]
 COPY ["Notification.Application/Notification.Application.csproj", "Notification.Application/"]
 COPY ["Notification.Infrastructure/Notification.Infrastructure.csproj", "Notification.Infrastructure/"]
 RUN dotnet restore "Notification.API/Notification.API.csproj"
