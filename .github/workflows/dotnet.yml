@@ -19,10 +19,10 @@ jobs:
         dotnet-version: 10.x
 
     - name: Restore dependencies
-      run: dotnet restore ./Backend.sln
+      run: dotnet restore ./Backend/Backend.sln
 
     - name: Build
-      run: dotnet build ./Backend.sln --no-restore
+      run: dotnet build ./Backend/Backend.sln --no-restore
 
     - name: Test
-      run: dotnet test ./Backend.sln --no-build --verbosity normal
+      run: dotnet test ./Backend/Backend.sln --no-build --verbosity normal
