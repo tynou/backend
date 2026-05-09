@@ -14,10 +14,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Notification.Application\Notification.Application.csproj" />
       <ProjectReference Include="..\Notification.Infrastructure\Notification.Infrastructure.csproj" />
       <ProjectReference Include="..\Common.Contracts\Common.Contracts.csproj" />
