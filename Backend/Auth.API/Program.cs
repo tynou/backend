@@ -5,7 +5,9 @@ using Auth.Infrastructure.Persistence;
 using Auth.Infrastructure.Services;
 using Common.Infrastructure.Extensions;
 using Common.Infrastructure.Middleware;
+using HealthChecks.UI.Client;
 using MassTransit;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using StackExchange.Redis;
@@ -31,8 +33,8 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddControllers();
 
-var connectionString = configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<AuthDbContext>(options => options.UseNpgsql(connectionString));
+var dbConnectionString = configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<AuthDbContext>(options => options.UseNpgsql(dbConnectionString));
 
 var redisHost = configuration["Redis:Host"] ?? "localhost";
 builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisHost));
@@ -66,6 +68,10 @@ builder.Services.AddJwtAuthentication(configuration);
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddHealthChecks()
+    .AddNpgSql(dbConnectionString)
+    .AddRedis("redis:6379");
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -79,6 +85,11 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.MapGrpcService<UserVerificationGrpcService>();
+
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
