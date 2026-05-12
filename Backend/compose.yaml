@@ -5,6 +5,8 @@
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: auth
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
   
@@ -14,22 +16,30 @@
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: posts
+    volumes:
+      - posts_db_data:/var/lib/postgresql/data
     ports:
       - "5434:5432"
   
   rabbit:
     image: rabbitmq:4-management
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/mnesia
     ports:
       - "5672:5672"
       - "15672:15672"
   
   redis:
     image: redis:8-alpine
+    volumes:
+      - redis_data:/data
     ports:
       - "6379:6379"
   
   redis-insight:
     image: redis/redisinsight:latest
+    volumes:
+      - redis_insight_data:/data
     ports:
       - "5540:5540"
   
@@ -39,11 +49,14 @@
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
 
   grafana:
     image: grafana/grafana
     ports:
       - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
   
@@ -101,3 +114,12 @@
       - "7004:7004"
     depends_on:
       - rabbit
+
+volumes:
+  auth_db_data:
+  posts_db_data:
+  rabbitmq_data:
+  redis_data:
+  redis_insight_data:
+  prometheus_data:
+  grafana_data:
