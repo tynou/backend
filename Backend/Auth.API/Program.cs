@@ -1,3 +1,4 @@
+using System.Diagnostics.Metrics;
 using Auth.API.GrpcServices;
 using Auth.Application.Interfaces;
 using Auth.Infrastructure.Auth;
@@ -10,6 +11,7 @@ using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+using OpenTelemetry.Metrics;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -72,6 +74,19 @@ builder.Services.AddHealthChecks()
     .AddNpgSql(dbConnectionString)
     .AddRedis("redis:6379");
 
+var authMeter = new Meter("AuthService.Metrics", "1.0.0");
+
+var registrationCounter = authMeter.CreateCounter<long>("user_registrations_total", description: "Кол-во успешных регистраций");
+
+builder.Services.AddSingleton(registrationCounter);
+
+builder.Services.AddOpenTelemetry()
+    .WithMetrics(metrics =>
+    {
+        metrics.AddMeter("AuthService.Metrics");
+        metrics.AddPrometheusExporter();
+    });
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -97,5 +112,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapPrometheusScrapingEndpoint();
 
 app.Run();

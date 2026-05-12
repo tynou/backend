@@ -1,3 +1,4 @@
+using System.Diagnostics.Metrics;
 using Auth.Application.Interfaces;
 using Auth.Domain.Entities;
 using Common.Application.Exceptions;
@@ -5,7 +6,7 @@ using MediatR;
 
 namespace Auth.Application.Features.Auth.Register;
 
-public class RegisterHandler(IUserRepository userRepository, IPasswordHasher passwordHasher) : IRequestHandler<RegisterCommand>
+public class RegisterHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, Counter<long> registrationCounter) : IRequestHandler<RegisterCommand>
 {
     public async Task Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
@@ -24,5 +25,7 @@ public class RegisterHandler(IUserRepository userRepository, IPasswordHasher pas
             PasswordSalt = passwordSalt
         };
         await userRepository.AddAsync(user);
+        
+        registrationCounter.Add(1); 
     }
 }
