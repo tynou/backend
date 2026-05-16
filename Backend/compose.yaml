@@ -6,7 +6,7 @@
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: auth
     volumes:
-      - auth_db_data:/var/lib/postgresql/data
+      - auth_db_data:/var/lib/postgresql
     ports:
       - "5433:5432"
   
@@ -17,7 +17,7 @@
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: posts
     volumes:
-      - posts_db_data:/var/lib/postgresql/data
+      - posts_db_data:/var/lib/postgresql
     ports:
       - "5434:5432"
   
